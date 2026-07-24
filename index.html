@@ -262,12 +262,17 @@
     <table id="signature" cellpadding="0" cellspacing="0" style="font-family:Arial,Helvetica,sans-serif;">
         <tr>
             <td  width="130" valign="center" align="center">
-                <img
-                    id="previewLogo"
-                    src="assets/vyntra.png"
-                    width="120"
-                    height="120"
-                    alt="logo">
+               <img
+                id="previewLogo"
+                src="assets/vyntra.png"
+                style="
+                    max-width:120px;
+                    max-height:120px;
+                    width:auto;
+                    height:auto;
+                    object-fit:contain;
+                "
+                alt="logo">
             </td>
 
             <td width="20">
@@ -394,7 +399,7 @@ logoInput.addEventListener("change", function () {
             const canvas = document.createElement("canvas");
 
             // Tamaño máximo del logo
-            const maxSize = 180;
+            const maxSize = 300;
 
             let width = image.width;
             let height = image.height;
