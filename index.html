@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Firmas | Vyntra Chile 💜</title>
+
+    <style>
+        :root {
+            --primary: #5B2EFF;
+            --primary-light: #F5F2FF;
+            --text: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --background: #F8FAFC;
+            --white: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0,0,0,.08);
+        }
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body{
+            background:var(--background);
+            padding:40px;
+        }
+        .container{
+            max-width:1400px;
+            margin:auto;
+            display:grid;
+            grid-template-columns:420px 1fr;
+            gap:40px;
+        }
+        /* PANEL */
+        .color-options {
+        display: flex;
+        gap: 10px;
+        margin-top: 8px;
+        margin-bottom: 5px;
+        }
+        .color-circle {
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            padding: 0;
+            margin: 0;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .color-circle:hover {
+            transform: scale(1.1);
+        }
+        .color-circle.active {
+            border: 3px solid #222;
+        }
+            .panel{
+            background:white;
+            border-radius:16px;
+            padding:30px;
+            box-shadow:var(--shadow);
+        }
+        .panel h1{
+            color:var(--primary);
+            font-size:28px;
+            margin-bottom:8px;
+        }
+        .panel p{
+            color:var(--text-light);
+            margin-bottom:30px;
+        }
+        .field{
+            display:flex;
+            flex-direction:column;
+            margin-bottom:18px;
+        }
+        label{
+            margin-bottom:6px;
+            font-weight:bold;
+            color:var(--text);
+        }
+        input{
+            height:46px;
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:0 15px;
+            outline:none;
+            font-size:14px;
+        }
+        input:focus{
+            border-color:var(--primary);
+        }
+        button{
+            width:100%;
+            height:48px;
+            margin-top:10px;
+            background:var(--primary);
+            color:white;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            font-size:15px;
+            font-weight:bold;
+        }
+        button:hover{
+            opacity:.9;
+        }
+        /* PREVIEW */
+        .contact-item{
+        display:flex;
+        align-items:center;
+        gap:8px;
+        margin-bottom:8px;
+        }
+        .contact-item span{
+            font-size:14px;
+            color:#444;
+        }
+        .preview{
+            position:sticky;
+            top:30px;
+            align-self:start;
+        }
+        .signature-wrapper{
+            background:white;
+            padding:40px;
+            border-radius:16px;
+            box-shadow:var(--shadow);
+        }
+        .signature{
+            width:600px;
+            display:flex;
+            align-items:center;
+            gap:25px;
+        }
+        .logo{
+            width:90px;
+            height:90px;
+            border-radius:12px;
+            background:#EEE;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            color:#999;
+            font-size:13px;
+        }
+        .divider{
+            width:2px;
+            align-self:stretch;
+            background:var(--primary);
+        }
+        .info{
+            flex:1;
+        }
+        .name{
+            font-size:22px;
+            font-weight:bold;
+            color:var(--primary);
+            margin-bottom:5px;
+        }
+        .role{
+            color:var(--text-light);
+            margin-bottom:18px;
+        }
+        .item{
+            margin-bottom:8px;
+            color:var(--text);
+            font-size:14px;
+        }
+        .social{
+            display:flex;
+            gap:20px;
+            margin-top:18px;
+        }
+        .social a{
+            color:var(--primary);
+            text-decoration:none;
+            font-size:14px;
+        }
+        @media(max-width:1100px){
+            .container{
+                grid-template-columns:1fr;
+            }
+            .signature{
+                width:100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- PANEL -->
+    <div class="panel">
+        <h1>Generador de Firmas</h1>
+        <p>Completa la información y visualiza tu firma en tiempo real.</p>
+        <div class="field">
+        <label>Logo</label>
+        <input type="file" id="logoInput" accept="image/*">
+    </div>
+    <div class="field">
+    <label>Color corporativo</label>
+    <div class="color-options">
+        <button type="button" class="color-circle" data-color="#5B2EFF" style="background:#5B2EFF;"></button>
+        <button type="button" class="color-circle" data-color="#2563EB" style="background:#2563EB;"></button>
+        <button type="button" class="color-circle" data-color="#16A34A" style="background:#16A34A;"></button>
+        <button type="button" class="color-circle" data-color="#DC2626" style="background:#DC2626;"></button>
+        <button type="button" class="color-circle" data-color="#F59E0B" style="background:#F59E0B;"></button>
+        <button type="button" class="color-circle" data-color="#111827" style="background:#111827;"></button>
+    </div>
+    <label for="brandColorHex" style="margin-top:12px;">
+        O ingresa tu color
+    </label>
+    <input
+        type="text"
+        id="brandColorHex"
+        value="#5B2EFF"
+        placeholder="#5B2EFF"
+        maxlength="7"
+    >
+</div>
+        <div class="field">
+            <label>Nombre</label>
+            <input id="name" placeholder="Escribe tu nombre">
+        </div>
+        <div class="field">
+            <label>Cargo</label>
+            <input id="role" placeholder="Escribe tu cargo">
+        </div>
+        <div class="field">
+            <label>Teléfono</label>
+            <input id="phone" placeholder="Escribe tu teléfono">
+        </div>
+        <div class="field">
+            <label>Correo</label>
+            <input id="email" placeholder="Escribe tu correo">
+        </div>
+        <div class="field">
+            <label>Sitio Web</label>
+            <input id="website" placeholder="Escribe dirección web">
+        </div>
+        <div class="field">
+            <label>Instagram</label>
+            <input id="instagram" placeholder="Escribe tu dirección de Instagram">
+        </div>
+        <div class="field">
+            <label>LinkedIn</label>
+            <input id="linkedin" placeholder="Escribe tu dirección de LinkedIn">
+        </div>       
+        <button id="copySignature">
+        📋 Copiar firma
+        </button>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="preview">
+     <div class="signature-wrapper">
+    <table id="signature" cellpadding="0" cellspacing="0" style="font-family:Arial,Helvetica,sans-serif;">
+        <tr>
+            <td  width="130" valign="center" align="center">
+                <img
+                    id="previewLogo"
+                    src="assets/vyntra.png"
+                    width="120"
+                    height="120"
+                    alt="logo">
+            </td>
+
+            <td width="20">
+            </td>
+            <td id="signatureInfo" style="border-left:3px solid #5B2EFF;padding-left:20px;">
+                <div
+                    id="previewName"
+                    style="font-size:20px;font-weight:bold;color:#222222;">
+                    Tu Nombre
+                </div>
+
+                <div
+                    id="previewRole"
+                    style="font-size:14px;color:#666;margin-bottom:15px;">
+                    Tu Cargo
+                </div>
+
+                <div class="contact-item">
+                    📞
+                <span id="previewPhone">
+                    +56 9 1234 5678
+                </span>
+                </div>            
+
+                <div class="contact-item" >
+                    📧
+                    <span id="previewEmail">
+                        hola@tuempresa.cl
+                    </span>
+                </div>
+                
+                <div class="contact-item">
+                    🌐
+                    <a id="previewWebsite" href="#" target="_blank">www.tudireccionweb.cl</a>
+                </div>
+
+                <div style="margin-top:15px; font-size:12px;">
+                <a
+                    id="previewInstagram"
+                    href="#"
+                    target="_blank"
+                    style="
+                        color:#5B2EFF;
+                        text-decoration:none;
+                        font-weight:bold;
+                    ">
+                    Síguenos en Instagram
+                </a>
+
+                <span style="color:#999;">&nbsp;·&nbsp;</span>
+                <a
+                    id="previewLinkedin"
+                    href="#"
+                    target="_blank"
+                    style="
+                        color:#5B2EFF;
+                        text-decoration:none;
+                        font-weight:bold;
+                    ">
+                    Conecta en LinkedIn
+                </a>
+            </div>
+            </div>
+            </td>
+        </tr>
+    </table>
+    </div>
+    </div>
+</div>
+</body>
+<script>    
+
+const signatureInfo = document.getElementById("signatureInfo");
+const brandColorHex = document.getElementById("brandColorHex");
+const colorCircles = document.querySelectorAll(".color-circle");
+
+
+function changeBrandColor(color) {
+    // Línea
+    signatureInfo.style.borderLeftColor = color;
+    // Redes
+    previewInstagram.style.color = color;
+    previewLinkedin.style.color = color;
+    // Actualizar input
+    brandColorHex.value = color;
+}
+
+colorCircles.forEach(circle => {
+    circle.addEventListener("click", function () {
+        const color = this.dataset.color;
+        changeBrandColor(color);
+        // Quitar selección anterior
+        colorCircles.forEach(item => {
+            item.classList.remove("active");
+        });
+        // Marcar seleccionado
+        this.classList.add("active");
+    });
+});
+
+brandColorHex.addEventListener("input", function () {
+    const color = this.value;
+    // Validar formato #FFFFFF
+    if (/^#[0-9A-Fa-f]{6}$/.test(color)) {
+        changeBrandColor(color);
+        // Si escribió manualmente, quitamos
+        // la selección de los predeterminados
+        colorCircles.forEach(item => {
+            item.classList.remove("active");
+        });
+    }
+});
+
+const logoInput = document.getElementById("logoInput");
+const previewLogo = document.getElementById("previewLogo");
+
+logoInput.addEventListener("change", function () {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const image = new Image();
+        image.onload = function () {
+            const canvas = document.createElement("canvas");
+
+            // Tamaño máximo del logo
+            const maxSize = 180;
+
+            let width = image.width;
+            let height = image.height;
+
+            // Mantener proporción
+            if (width > height) {
+
+                if (width > maxSize) {
+                    height = height * (maxSize / width);
+                    width = maxSize;
+                }
+            } else {
+                if (height > maxSize) {
+                    width = width * (maxSize / height);
+                    height = maxSize;
+                }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(
+                image,
+                0,
+                0,
+                width,
+                height
+            );
+
+            // Convertir la imagen reducida a Base64
+            const compressedImage = canvas.toDataURL(
+                "image/png"
+            );
+
+            // Mostrarla en la firma
+            previewLogo.src = compressedImage;
+            console.log(
+                "Logo original:",
+                Math.round(file.size / 1024),
+                "KB"
+            );
+            console.log(
+                "Logo optimizado:",
+                Math.round(compressedImage.length * 0.75 / 1024),
+                "KB"
+            );
+        };
+        image.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+const fields = {
+    name: document.getElementById("name"),
+    role: document.getElementById("role"),
+    phone: document.getElementById("phone"),
+    email: document.getElementById("email"),
+    website: document.getElementById("website"),
+    instagram: document.getElementById("instagram"),
+    linkedin: document.getElementById("linkedin")
+}
+
+fields.name.addEventListener("input", e=>{
+    previewName.textContent=e.target.value;
+});
+
+fields.role.addEventListener("input", e=>{
+    previewRole.textContent=e.target.value;
+});
+
+fields.phone.addEventListener("input", e=>{
+    previewPhone.textContent=e.target.value;
+});
+
+fields.email.addEventListener("input", e=>{
+    previewEmail.textContent=e.target.value;
+});
+
+fields.website.addEventListener("input", e=>{
+    previewWebsite.textContent=e.target.value;
+});
+
+fields.instagram.addEventListener("input", e=>{
+    previewInstagram.href=e.target.value;
+});
+
+fields.linkedin.addEventListener("input", e=>{
+    previewLinkedin.href=e.target.value;
+});
+
+function copyComputedStyles(source, target) {
+    const computed = window.getComputedStyle(source);
+    let style = "";
+    for (const property of computed) {
+        style += `${property}:${computed.getPropertyValue(property)};`;
+    }
+    target.setAttribute("style", style);
+    const sourceChildren = source.children;
+    const targetChildren = target.children;
+    for (let i = 0; i < sourceChildren.length; i++) {
+        copyComputedStyles(sourceChildren[i], targetChildren[i]);
+    }
+}
+
+const copyButton = document.getElementById("copySignature");
+copyButton.addEventListener("click", async () => {
+    const signature = document.getElementById("signature");
+    // Clonar la firma
+    const clone = signature.cloneNode(true);
+    copyComputedStyles(signature, clone);
+    
+    // Copiar el HTML ya con las imágenes embebidas
+    const html = clone.outerHTML;
+    const blob = new Blob([html], { type: "text/html" });
+    const data = new ClipboardItem({
+        "text/html": blob
+    });
+
+    await navigator.clipboard.write([data]);
+    copyButton.textContent = "✅ Firma copiada";
+    setTimeout(() => {
+        copyButton.textContent = "📋 Copiar Firma";
+    }, 2000);
+});
+
+</script>
+</html>
